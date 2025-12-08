@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import ChatSidebar from "@/components/chat/ChatSidebar";
 import ChatArea from "@/components/chat/ChatArea";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -24,7 +24,7 @@ interface Conversation {
   createdAt: string;
 }
 
-export default function ChatLayout() {
+function ChatUI() {
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [messages, setMessages] = useState<Message[]>([]);
   const [currentConversationId, setCurrentConversationId] = useState<
@@ -336,5 +336,13 @@ export default function ChatLayout() {
         />
       </main>
     </div>
+  );
+}
+
+export default function ChatLayout() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ChatUI />
+    </Suspense>
   );
 }

@@ -7,8 +7,9 @@ import { motion } from "framer-motion";
 import { Mail, Lock, ArrowRight, Chrome, Loader2, AlertCircle, CheckCircle2, Eye, EyeOff } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
+import { Suspense } from "react";
 
-export default function LoginPage() {
+function LoginUI() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailFocused, setEmailFocused] = useState(false);
@@ -234,5 +235,14 @@ export default function LoginPage() {
         </div>
       </motion.div>
     </div>
+  );
+}
+
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <LoginUI />
+    </Suspense>
   );
 }
