@@ -48,7 +48,7 @@ export default function Hero() {
           >
             <motion.div variants={itemVariants} className="inline-flex items-center px-4 py-2 rounded-full bg-blue-50 text-blue-700 text-sm font-medium mb-6 border border-blue-100">
               <Activity className="w-4 h-4 mr-2" />
-              ✨ Analitik Berbasis AI
+              ✨ Permintaan Data Berbasis AI Agent
             </motion.div>
             
             <motion.h1 variants={itemVariants} className="text-5xl md:text-6xl font-bold mb-6 tracking-tight leading-tight text-[#002B6A]">
