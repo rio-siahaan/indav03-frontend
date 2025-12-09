@@ -34,6 +34,8 @@ export default function BpsSyncManager() {
   const [loadingVars, setLoadingVars] = useState(false);
   const [syncing, setSyncing] = useState(false);
 
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:7860";
+
   const [message, setMessage] = useState<{
     type: "success" | "error";
     text: string;
@@ -47,7 +49,7 @@ export default function BpsSyncManager() {
 
   const fetchSubjects = async () => {
     try {
-      const res = await fetch("http://localhost:8000/api/bps/subjects");
+      const res = await fetch(`${backendUrl}/api/bps/subjects`);
       if (res.ok) {
         const data = await res.json();
         setSubjects(data);
@@ -68,7 +70,7 @@ export default function BpsSyncManager() {
 
     try {
       const res = await fetch(
-        `http://localhost:8000/api/bps/variables/${subId}`
+        `${backendUrl}/api/bps/variables/${subId}`
       );
       if (res.ok) {
         const data = await res.json();
@@ -91,7 +93,7 @@ export default function BpsSyncManager() {
     try {
       // Sync last 5 years (2020-2025 -> 120-125)
       const res = await fetch(
-        `http://localhost:8000/api/bps/sync-variable?var_id=${selectedVar}&start_year=120&end_year=125`,
+        `${backendUrl}/api/bps/sync-variable?var_id=${selectedVar}&start_year=120&end_year=125`,
         {
           method: "POST",
         }

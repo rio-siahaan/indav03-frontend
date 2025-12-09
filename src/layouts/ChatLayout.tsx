@@ -40,6 +40,7 @@ function ChatUI() {
   const [toolStatus, setToolStatus] = useState<string | null>(null); // Track tool usage
   const router = useRouter();
   const searchParams = useSearchParams();
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:7860";
 
   // Fetch conversations on mount
   useEffect(() => {
@@ -175,7 +176,7 @@ function ChatUI() {
       });
 
       // 3. Call AI Backend with Streaming
-      const response = await fetch("http://localhost:8000/chat", {
+      const response = await fetch(`${backendUrl}/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
