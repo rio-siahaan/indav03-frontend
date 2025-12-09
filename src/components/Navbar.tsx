@@ -78,17 +78,23 @@ export default function Navbar() {
               </div>
             ) : (
               <>
-                <Link
+                {/* <Link
                   href="/login"
                   className="text-sm font-medium hover:text-blue-600 transition-colors text-[#002B6A]"
                 >
                   Masuk
-                </Link>
-                <Link
+                </Link> */}
+                {/* <Link
                   href="/register"
                   className="px-4 py-2 bg-[#002B6A] text-white rounded-full text-sm font-medium hover:bg-blue-900 transition-all"
                 >
                   Daftar
+                </Link> */}
+                <Link
+                  href="/login"
+                  className="px-4 py-2 bg-[#002B6A] text-white rounded-full text-sm font-medium hover:bg-blue-900 transition-all"
+                >
+                  Masuk
                 </Link>
               </>
             )}
