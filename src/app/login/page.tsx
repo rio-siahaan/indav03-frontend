@@ -219,12 +219,12 @@ function LoginUI() {
           </motion.button>
 
           {/* Register Link */}
-          <p className="text-center text-sm text-gray-600 mt-8">
+          {/* <p className="text-center text-sm text-gray-600 mt-8">
             Belum punya akun?{" "}
             <Link href="/register" className="text-[#002B6A] font-semibold hover:underline">
               Buat akun
             </Link>
-          </p>
+          </p> */}
         </div>
 
         {/* Back to Home */}
