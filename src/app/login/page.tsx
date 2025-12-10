@@ -37,6 +37,7 @@ function LoginUI() {
     if (res?.error) {
       setError("Email atau password Anda salah");
     } else {
+      setError("")
       setSuccess(true);
       push(callbackUrl)
     }
