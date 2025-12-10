@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useSession, signOut } from "next-auth/react";
-import { User, LogOut } from "lucide-react";
+import { User, LogOut, LayoutDashboard } from "lucide-react";
 import { useState } from "react";
 
 export default function Navbar() {
@@ -66,6 +66,15 @@ export default function Navbar() {
                         {session.user?.email}
                       </p>
                     </div>
+                    {session.user?.role === "admin" && (
+                    <a
+                      href="/admin/dashboard"
+                      className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center gap-2 transition-colors"
+                    >
+                      <LayoutDashboard className="h-4 w-4" />
+                      Dashboard
+                    </a>
+                    )}
                     <button
                       onClick={() => signOut()}
                       className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center gap-2 transition-colors"
