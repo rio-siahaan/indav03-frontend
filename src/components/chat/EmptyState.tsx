@@ -20,7 +20,7 @@ export default function EmptyState({
     },
     {
       icon: <Search className="w-5 h-5 text-blue-600" />,
-      text: "Berapa jumlah penduduk di Padang Lawas tahun 2025?",
+      text: "Berapa jumlah penduduk di Sumatera Utara tahun 2025?",
       color: "bg-blue-50 border-blue-100 hover:border-blue-300",
     },
     {
