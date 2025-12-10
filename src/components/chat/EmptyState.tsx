@@ -15,17 +15,17 @@ export default function EmptyState({
   const questions = [
     {
       icon: <BarChart3 className="w-5 h-5 text-green-600" />,
-      text: "Tampilkan grafik pertumbuhan ekonomi Sumut 5 tahun terakhir",
+      text: "Ekspor data Indeks Ketahanan Gender Sumut tahun 2021 sampai 2023.",
       color: "bg-green-50 border-green-100 hover:border-green-300",
     },
     {
       icon: <Search className="w-5 h-5 text-blue-600" />,
-      text: "Berapa jumlah penduduk Kota Medan tahun 2024?",
+      text: "Berapa jumlah penduduk di Padang Lawas tahun 2025?",
       color: "bg-blue-50 border-blue-100 hover:border-blue-300",
     },
     {
       icon: <Sparkles className="w-5 h-5 text-purple-600" />,
-      text: "Analisis tingkat pengangguran di Sumatera Utara",
+      text: "Siapa kepala dan alamat dari BPS Sumatera Utara?",
       color: "bg-purple-50 border-purple-100 hover:border-purple-300",
     },
   ];
