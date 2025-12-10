@@ -70,7 +70,7 @@ export default function ChatSidebar({
         initial={false}
         animate={{ width: isOpen ? 288 : 0 }}
       >
-        <div className="flex flex-col h-full w-72">
+        <div className={`${isOpen ? "flex flex-col h-full w-72" : "hidden"}`}>
           {" "}
           {/* Fixed width container to prevent content squishing */}
           {/* Header */}
