@@ -101,7 +101,7 @@ export default function Hero() {
           transition={{ duration: 0.8 }}
           className="bg-[#002B6A] rounded-3xl p-12 text-white shadow-2xl relative overflow-hidden"
         >
-          <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
+          {/* <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div> */}
           <div className="grid md:grid-cols-3 gap-8 relative z-10 text-center divide-y md:divide-y-0 md:divide-x divide-blue-800/50">
             <div className="p-4">
               <div className="text-5xl font-bold mb-2">33+</div>
