@@ -162,11 +162,11 @@ function LoginUI() {
             </div>
 
             {/* Forgot Password Link */}
-            <div className="text-right">
+            {/* <div className="text-right">
               <Link href="/forgot-password" className="text-sm text-[#002B6A] hover:underline">
                 Lupa kata sandi?
               </Link>
-            </div>
+            </div> */}
 
             {/* Submit Button */}
             <motion.button
