@@ -108,8 +108,8 @@ export default function Hero() {
               <div className="text-blue-200 uppercase tracking-wider text-sm">Kabupaten & Kota</div>
             </div>
             <div className="p-4">
-              <div className="text-5xl font-bold mb-2">450+</div>
-              <div className="text-blue-200 uppercase tracking-wider text-sm">Tabel Data</div>
+              <div className="text-5xl font-bold mb-2">10+</div>
+              <div className="text-blue-200 uppercase tracking-wider text-sm">Kategori Data</div>
             </div>
             <div className="p-4">
               <div className="text-5xl font-bold mb-2">24/7</div>
