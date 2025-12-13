@@ -10,6 +10,7 @@ import {
   Menu,
   X,
   Database,
+  House,
 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -19,13 +20,14 @@ export default function AdminSidebar() {
   const [isOpen, setIsOpen] = useState(false);
 
   const links = [
-    { href: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
+    {href: "/", label: "Beranda", icon: House},
+    { href: "/admin/dashboard", label: "Dasbor", icon: LayoutDashboard },
     {
       href: "/admin/knowledge",
-      label: "Knowledge Base",
+      label: "Tabel Data",
       icon: FileSpreadsheet,
     },
-    { href: "/admin/bps", label: "BPS Sync", icon: Database },
+    { href: "/admin/bps", label: "Sinkronisasi Data", icon: Database },
   ];
 
   const toggleSidebar = () => setIsOpen(!isOpen);
@@ -54,14 +56,14 @@ export default function AdminSidebar() {
       {/* Sidebar */}
       <aside
         className={cn(
-          "fixed top-0 left-0 z-40 h-screen w-64 bg-[#002B6A] text-white transition-transform duration-300 ease-in-out lg:translate-x-0",
+          "fixed top-0 left-0 z-40 h-[-webkit-fill-available] w-64 bg-[#002B6A] text-white transition-transform duration-300 ease-in-out lg:translate-x-0",
           isOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >
         <div className="flex flex-col h-full overflow-y-auto">
           {/* Logo / Header */}
           <div className="p-6 border-b border-blue-800">
-            <h1 className="text-2xl font-bold tracking-tight">INDA Admin</h1>
+            <h1 className="text-2xl font-bold tracking-tight">Admin INDA</h1>
             <p className="text-xs text-blue-200 mt-1">BPS Sumatera Utara</p>
           </div>
 

@@ -123,9 +123,9 @@ export default function BpsSyncManager() {
     <div className="space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">BPS Data Sync</h1>
+        <h1 className="text-3xl font-bold text-gray-900">Sinkronisasi Data BPS</h1>
         <p className="text-gray-500 mt-1">
-          Directly sync statistical data from BPS API to Knowledge Base
+          Sinkronisasi data statistik langsung dari API BPS ke Knowledge Base
         </p>
       </div>
 
@@ -136,7 +136,7 @@ export default function BpsSyncManager() {
           <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
             <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
               <Layers className="w-5 h-5 text-blue-600" />
-              1. Select Subject
+              1. Pilih Subject
             </h2>
 
             {loadingSubjects ? (
@@ -165,7 +165,7 @@ export default function BpsSyncManager() {
             <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
               <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
                 <Table className="w-5 h-5 text-blue-600" />
-                2. Select Table
+                2. Pilih Table
               </h2>
 
               {loadingVars ? (
@@ -203,23 +203,23 @@ export default function BpsSyncManager() {
             {!selectedVar ? (
               <div className="text-gray-400">
                 <Database className="w-16 h-16 mx-auto mb-4 opacity-20" />
-                <h3 className="text-lg font-medium">Ready to Sync</h3>
+                <h3 className="text-lg font-medium">Siap untuk sinkronisasi </h3>
                 <p className="text-sm mt-2">
-                  Select a subject and a table to begin synchronization.
+                  Pilih Subject dan Table untuk memulai sinkronisasi.
                 </p>
               </div>
             ) : (
               <div className="w-full max-w-md space-y-6">
                 <div className="bg-blue-50 p-6 rounded-2xl border border-blue-100">
                   <h3 className="font-bold text-blue-900 text-lg mb-2">
-                    Selected Data
+                    Data yang dipilih
                   </h3>
                   <p className="text-blue-700">
                     {variables.find((v) => v.val === selectedVar)?.label}
                   </p>
                   <div className="mt-4 flex items-center justify-center gap-2 text-sm text-blue-600 bg-white/50 py-2 rounded-lg">
                     <RefreshCw className="w-4 h-4" />
-                    Syncing data from 2020 - 2025
+                    Sinkronisasi data dari 2020 - 2025
                   </div>
                 </div>
 
@@ -231,11 +231,11 @@ export default function BpsSyncManager() {
                   {syncing ? (
                     <>
                       <RefreshCw className="w-5 h-5 animate-spin" />
-                      Syncing with BPS...
+                      Sinkronisasi dengan BPS...
                     </>
                   ) : (
                     <>
-                      Start Sync Process
+                      Mulai Proses Sinkronisasi
                       <ChevronRight className="w-5 h-5" />
                     </>
                   )}

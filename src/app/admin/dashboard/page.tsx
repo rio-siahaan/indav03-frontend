@@ -1,11 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import {
   Users,
-  MessageSquare,
   FileText,
   Cpu,
   Activity,
@@ -53,27 +52,45 @@ export default function AdminDashboard() {
   const [stats, setStats] = useState<AdminStats | null>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (status === "unauthenticated") {
-      router.push("/login");
-    } else if (status === "authenticated") {
-      fetchStats();
-    }
-  }, [status, router]);
-
-  const fetchStats = async () => {
+  const fetchStats = useCallback(async () => {
     try {
       const res = await fetch("/api/admin/stats");
       if (res.ok) {
         const data = await res.json();
         setStats(data);
+        localStorage.setItem("admin_dashboard_stats", JSON.stringify(data));
       }
     } catch (error) {
       console.error("Failed to fetch stats", error);
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/login");
+      return;
+    }
+
+    if (status === "authenticated") {
+      // Load from cache immediately
+      const cached = localStorage.getItem("admin_dashboard_stats");
+      if (cached) {
+        try {
+          setStats(JSON.parse(cached));
+          setLoading(false);
+        } catch (error) {
+          console.error("Failed to parse cache", error);
+        }
+      }
+
+      fetchStats();
+
+      const interval = setInterval(fetchStats, 30000);
+      return () => clearInterval(interval);
+    }
+  }, [status, router, fetchStats]);
 
   if (loading) {
     return (
@@ -99,15 +116,15 @@ export default function AdminDashboard() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold text-gray-900">
-              Admin Dashboard
+              Dasbor Admin
             </h1>
             <p className="text-gray-500 mt-1">
-              Overview of system performance and usage
+              Ringkasan kinerja sistem dan penggunaan
             </p>
           </div>
           <div className="bg-white p-2 rounded-lg shadow-sm border border-gray-200">
             <span className="text-sm font-medium text-gray-600">
-              Last updated: {new Date().toLocaleTimeString()}
+              Terakhir diperbarui: {new Date().toLocaleTimeString()}
             </span>
           </div>
         </div>
@@ -122,7 +139,7 @@ export default function AdminDashboard() {
               </div>
             </div>
             <h3 className="text-gray-500 text-sm font-medium">
-              Total Documents
+              Total Dokumen
             </h3>
             <p className="text-3xl font-bold text-gray-900 mt-1">
               {stats.totalDocuments}
@@ -136,7 +153,7 @@ export default function AdminDashboard() {
                 <Users className="w-6 h-6 text-purple-600" />
               </div>
             </div>
-            <h3 className="text-gray-500 text-sm font-medium">Total Users</h3>
+            <h3 className="text-gray-500 text-sm font-medium">Total Pengguna</h3>
             <p className="text-3xl font-bold text-gray-900 mt-1">
               {stats.totalUsers}
             </p>
@@ -150,7 +167,7 @@ export default function AdminDashboard() {
               </div>
             </div>
             <h3 className="text-gray-500 text-sm font-medium">
-              Estimated Cost
+              Biaya yang Diperkirakan
             </h3>
             <p className="text-3xl font-bold text-gray-900 mt-1">
               ${stats.estimatedCost.toFixed(4)}
@@ -167,11 +184,11 @@ export default function AdminDashboard() {
                 <Cpu className="w-6 h-6 text-indigo-600" />
               </div>
             </div>
-            <h3 className="text-gray-500 text-sm font-medium">Token Usage</h3>
+            <h3 className="text-gray-500 text-sm font-medium">Penggunaan Token</h3>
             <p className="text-3xl font-bold text-gray-900 mt-1">
               {(stats.totalTokens / 1000).toFixed(1)}k
             </p>
-            <p className="text-xs text-gray-400 mt-1">Total tokens consumed</p>
+            <p className="text-xs text-gray-400 mt-1">Total tokens yang digunakan</p>
           </div>
         </div>
 
@@ -181,7 +198,7 @@ export default function AdminDashboard() {
           <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
             <h3 className="text-lg font-bold text-gray-900 mb-6 flex items-center gap-2">
               <Activity className="w-5 h-5 text-gray-500" />
-              Token Distribution
+              Distribusi Token
             </h3>
             <div className="h-[300px] w-full">
               <ResponsiveContainer width="100%" height="100%">
@@ -226,7 +243,7 @@ export default function AdminDashboard() {
           <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
             <h3 className="text-lg font-bold text-gray-900 mb-6 flex items-center gap-2">
               <BarChart3 className="w-5 h-5 text-gray-500" />
-              Activity (Last 24 Hours)
+              Aktivitas (24 Jam Terakhir)
             </h3>
             <div className="h-[300px] w-full">
               <ResponsiveContainer width="100%" height="100%">
@@ -246,7 +263,7 @@ export default function AdminDashboard() {
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
           <div className="p-6 border-b border-gray-100">
             <h3 className="text-lg font-bold text-gray-900">
-              Top Active Users
+              Top Pengguna Aktif 
             </h3>
           </div>
           <div className="overflow-x-auto">
@@ -284,7 +301,7 @@ export default function AdminDashboard() {
                       colSpan={4}
                       className="px-6 py-8 text-center text-gray-400"
                     >
-                      No usage data available yet.
+                      Tidak ada data penggunaan.
                     </td>
                   </tr>
                 )}

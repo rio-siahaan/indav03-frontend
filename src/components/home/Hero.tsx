@@ -38,63 +38,61 @@ export default function Hero() {
       </div>
 
       {/* Hero Section */}
-      <header className="container mx-auto px-6 pt-24 pb-20 relative">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+      <header className="container mx-auto px-6 pt-32 pb-24 relative z-10">
+        <div className="max-w-4xl mx-auto text-center">
           <motion.div
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="text-left"
+            className="flex flex-col items-center"
           >
-            <motion.div variants={itemVariants} className="inline-flex items-center px-4 py-2 rounded-full bg-blue-50 text-blue-700 text-sm font-medium mb-6 border border-blue-100">
-              <Activity className="w-4 h-4 mr-2" />
-              ✨ Permintaan Data Berbasis AI Agent
+            <motion.div
+              variants={itemVariants}
+              className="inline-flex items-center px-4 py-2 rounded-full bg-blue-600/10 text-blue-700 text-sm font-bold mb-8 border border-blue-200 shadow-sm backdrop-blur-sm"
+            >
+              <span className="flex h-2 w-2 relative mr-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+              </span>
+              Teknologi AI Agent
             </motion.div>
-            
-            <motion.h1 variants={itemVariants} className="text-5xl md:text-6xl font-bold mb-6 tracking-tight leading-tight text-[#002B6A]">
-              Jelajahi Kekuatan <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#002B6A] to-blue-600">
+
+            <motion.h1
+              variants={itemVariants}
+              className="text-4xl md:text-5xl font-black mb-8 tracking-tight leading-[1.1] text-[#002B6A]"
+            >
+              Jelajahi kekuatan <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 animate-gradient-x">
                 Data BPS Sumut
               </span>
             </motion.h1>
-            
-            <motion.p variants={itemVariants} className="text-lg text-gray-600 mb-8 max-w-xl leading-relaxed">
+
+            <motion.p
+              variants={itemVariants}
+              className="text-xl md:text-2xl text-gray-600 mb-10 max-w-2xl leading-relaxed font-medium"
+            >
               Rasakan cara baru berinteraksi dengan statistik. Ajukan pertanyaan, buat grafik, dan ekspor laporan menggunakan agen AI canggih kami.
             </motion.p>
-            
-            <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4">
+
+            <motion.div
+              variants={itemVariants}
+              className="flex flex-col sm:flex-row gap-4 justify-center w-full"
+            >
               <Link
                 href="/chat"
-                className="group relative inline-flex items-center justify-center px-8 py-4 bg-[#002B6A] text-white rounded-full font-semibold text-lg hover:bg-blue-900 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1"
+                className="group relative inline-flex items-center justify-center px-8 py-4 bg-[#002B6A] text-white rounded-full font-semibold text-lg hover:bg-blue-900 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 w-full sm:w-auto"
               >
-                Mulai Jelajahi
+                Mulai Tanya Data
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Link>
             </motion.div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="relative hidden lg:block"
-          >
-             <div className="relative w-full h-[500px] drop-shadow-2xl">
-                <Image 
-                  src="/Atlas_SMP_BIG_-_Sumatera_Utara.svg" 
-                  alt="Map of Sumatera Utara" 
-                  fill
-                  className="object-contain"
-                  priority
-                />
-             </div>
           </motion.div>
         </div>
       </header>
 
       {/* Stats Preview Section */}
       <section className="container mx-auto px-6 py-12">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -105,15 +103,21 @@ export default function Hero() {
           <div className="grid md:grid-cols-3 gap-8 relative z-10 text-center divide-y md:divide-y-0 md:divide-x divide-blue-800/50">
             <div className="p-4">
               <div className="text-5xl font-bold mb-2">33+</div>
-              <div className="text-blue-200 uppercase tracking-wider text-sm">Kabupaten & Kota</div>
+              <div className="text-blue-200 uppercase tracking-wider text-sm">
+                Kabupaten & Kota
+              </div>
             </div>
             <div className="p-4">
               <div className="text-5xl font-bold mb-2">10+</div>
-              <div className="text-blue-200 uppercase tracking-wider text-sm">Kategori Data</div>
+              <div className="text-blue-200 uppercase tracking-wider text-sm">
+                Kategori Data
+              </div>
             </div>
             <div className="p-4">
               <div className="text-5xl font-bold mb-2">24/7</div>
-              <div className="text-blue-200 uppercase tracking-wider text-sm">Ketersediaan AI</div>
+              <div className="text-blue-200 uppercase tracking-wider text-sm">
+                Ketersediaan AI
+              </div>
             </div>
           </div>
         </motion.div>
