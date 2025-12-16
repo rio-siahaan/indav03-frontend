@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { ArrowRight, Activity } from "lucide-react";
 import { motion, Variants } from "framer-motion";
 
@@ -61,7 +60,7 @@ export default function Hero() {
               variants={itemVariants}
               className="text-4xl md:text-5xl font-black mb-8 tracking-tight leading-[1.1] text-[#002B6A]"
             >
-              Jelajahi kekuatan <br />
+              Jelajahi Kekuatan <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 animate-gradient-x">
                 Data BPS Sumut
               </span>

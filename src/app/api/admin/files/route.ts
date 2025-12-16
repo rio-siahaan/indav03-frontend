@@ -2,6 +2,10 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { redis } from "@/lib/redis";
+
+const FILES_CACHE_KEY = "admin:files";
+const CACHE_TTL = 300; // 5 minutes
 
 export async function GET(req: Request) {
   const session = await getServerSession(authOptions);
@@ -23,11 +27,32 @@ export async function GET(req: Request) {
   }
 
   try {
+    // 1. Try Cache
+    let cached = null;
+    try {
+      cached = await redis.get(FILES_CACHE_KEY);
+    } catch (e) {
+      console.warn("Redis unavailable, skipping cache read:", e);
+    }
+
+    if (cached) {
+      return NextResponse.json(JSON.parse(cached));
+    }
+
+    // 2. Fetch DB
     const files = await prisma.files.findMany({
       orderBy: {
         created_at: "desc",
       },
     });
+
+    // 3. Set Cache
+    try {
+      await redis.set(FILES_CACHE_KEY, JSON.stringify(files), "EX", CACHE_TTL);
+    } catch (e) {
+      console.warn("Redis unavailable, skipping cache write:", e);
+    }
+
     return NextResponse.json(files);
   } catch (error) {
     return NextResponse.json(
@@ -96,6 +121,13 @@ export async function POST(req: Request) {
       },
     });
 
+    // Invalidate Cache
+    try {
+      await redis.del(FILES_CACHE_KEY);
+    } catch (e) {
+      console.warn("Redis unavailable, skipping cache invalidation:", e);
+    }
+
     return NextResponse.json(newFile);
   } catch (error) {
     console.error("Upload error:", error);
@@ -135,6 +167,15 @@ export async function DELETE(req: Request) {
     await prisma.files.delete({
       where: { id },
     });
+
+    // Invalidate Cache
+    // Invalidate Cache
+    try {
+      await redis.del(FILES_CACHE_KEY);
+    } catch (e) {
+      console.warn("Redis unavailable, skipping cache invalidation:", e);
+    }
+
     return NextResponse.json({ success: true });
   } catch (error) {
     return NextResponse.json(

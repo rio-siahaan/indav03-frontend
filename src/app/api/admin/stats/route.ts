@@ -2,6 +2,10 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { redis } from "@/lib/redis";
+
+const STATS_CACHE_KEY = "admin:stats";
+const CACHE_TTL = 300; // 5 minutes
 
 export async function GET(req: Request) {
   const session = await getServerSession(authOptions);
@@ -23,6 +27,18 @@ export async function GET(req: Request) {
   }
 
   try {
+    // 1. Try Cache
+    let cached = null;
+    try {
+      cached = await redis.get(STATS_CACHE_KEY);
+    } catch (e) {
+      console.warn("Redis unavailable, skipping cache read:", e);
+    }
+
+    if (cached) {
+      return NextResponse.json(JSON.parse(cached));
+    }
+
     // 1. Total Users
     const totalUsers = await prisma.user.count();
 
@@ -108,7 +124,7 @@ export async function GET(req: Request) {
       count,
     }));
 
-    return NextResponse.json({
+    const statsData = {
       totalUsers,
       totalConversations,
       totalMessages,
@@ -121,7 +137,22 @@ export async function GET(req: Request) {
       estimatedCost,
       topUsers: topUsers.filter(Boolean),
       activityData,
-    });
+    };
+
+    // Set Cache
+    // Set Cache (Fail-safe)
+    try {
+      await redis.set(
+        STATS_CACHE_KEY,
+        JSON.stringify(statsData),
+        "EX",
+        CACHE_TTL
+      );
+    } catch (e) {
+      console.warn("Redis unavailable, skipping cache write:", e);
+    }
+
+    return NextResponse.json(statsData);
   } catch (error) {
     console.error("Error fetching admin stats:", error);
     return NextResponse.json(

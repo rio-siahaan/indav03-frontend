@@ -30,8 +30,6 @@ export default function KnowledgeManager() {
       if (res.ok) {
         const data = await res.json();
         setFiles(data);
-        // Cache the data
-        localStorage.setItem("knowledge_manager_files", JSON.stringify(data));
       }
     } catch (error) {
       console.error("Failed to fetch files", error);
@@ -41,24 +39,7 @@ export default function KnowledgeManager() {
   }, []);
 
   useEffect(() => {
-    // Load from cache immediately
-    const cached = localStorage.getItem("knowledge_manager_files");
-    if (cached) {
-      try {
-        setFiles(JSON.parse(cached));
-        setLoading(false);
-      } catch (error) {
-        console.error("Failed to parse cache", error);
-      }
-    }
-
-    // Fetch fresh data
     fetchFiles();
-
-    // Set up periodic refresh (every 30 seconds)
-    const interval = setInterval(fetchFiles, 30000);
-
-    return () => clearInterval(interval);
   }, [fetchFiles]);
 
   const handleDelete = async (id: string) => {
@@ -88,7 +69,7 @@ export default function KnowledgeManager() {
       <div>
         <h1 className="text-3xl font-bold text-gray-900">Daftar Tabel</h1>
         <p className="text-gray-500 mt-1">
-          Lihat semua sumber data yang disinkronkan dari BPS API dan unggahan manual.
+          Lihat semua sumber data yang disinkronkan dari BPS API.
         </p>
       </div>
 
@@ -96,8 +77,8 @@ export default function KnowledgeManager() {
       <div className="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">
         <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
           <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
-            <FileText className="w-5 h-5 text-blue-600" />
-            ({filteredFiles.length}) Tabel Data
+            <FileText className="w-5 h-5 text-blue-600" />(
+            {filteredFiles.length}) Tabel Data
           </h2>
 
           <div className="relative w-full md:w-auto">
@@ -125,7 +106,9 @@ export default function KnowledgeManager() {
           <div className="text-center py-12 text-gray-400">
             <FileText className="w-12 h-12 mx-auto mb-3 opacity-20" />
             <p>Tidak ada tabel data.</p>
-            <p className="text-sm mt-1">Gunakan <i>Sinkronisasi Data BPS</i> untuk menambahkan data.</p>
+            <p className="text-sm mt-1">
+              Gunakan <i>Sinkronisasi Data BPS</i> untuk menambahkan data.
+            </p>
           </div>
         ) : (
           <div className="space-y-2">

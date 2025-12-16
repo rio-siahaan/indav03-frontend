@@ -14,6 +14,7 @@ import { signOut, useSession } from "next-auth/react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 
 interface Conversation {
   id: string;
@@ -95,6 +96,14 @@ export default function ChatSidebar({
           </div>
           {/* New Chat Button */}
           <div className="p-4">
+            <div className="text-right mb-3">
+              <Link
+                href="/"
+                className="text-sm text-gray-600 hover:text-[#002B6A] transition-colors"
+              >
+                ← Kembali ke Beranda
+              </Link>
+            </div>
             <button
               onClick={onNewConversation}
               className="w-full flex items-center gap-3 px-4 py-3 bg-[#002B6A] text-white rounded-xl hover:bg-blue-900 transition-all shadow-md hover:shadow-lg group"
