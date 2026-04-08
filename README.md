@@ -29,6 +29,7 @@ Adapun fitur yang tersedia pada produk saat ini adalah:
 - Tailwind CSS 4
 - TypeScript
 - PostgreSQL
+- Redis
 
 # Struktur Proyek Saat Ini
 
