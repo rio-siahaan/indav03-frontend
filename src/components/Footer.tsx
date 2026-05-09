@@ -22,17 +22,17 @@ export default function Footer() {
             </div>
             
             <div className="space-y-1 text-blue-100 text-sm leading-relaxed">
-              <p>Badan Pusat Statistik Provinsi Sumatera Utara (BPS-Statistics Sumatera Utara Province)</p>
-              <p>Jl. Asrama No. 179 Medan 20123 Indonesia</p>
-              <p>Telp (62-61) 8452343</p>
-              <p>Faks (62-61) 8452773</p>
-              <p>Mailbox : pst1200@bps.go.id</p>
+              <p>Badan Pusat Statistik Kabupaten Flores Timur (Central Statistics Agency of East Flores Regency)</p>
+              <p>Jl. San Juan, Tengah, Sarotari, Kec. Larantuka, Kabupaten Flores Timur, Nusa Tenggara Timur, Indonesia</p>
+              <p>Telp (0383) 21164</p>
+              <p>Faks (0383) 21164</p>
+              <p>Mailbox : bps5309@bps.go.id</p>
             </div>
 
             <div className="flex gap-6 text-sm mt-6 font-medium">
               <Link href="https://manual-website-bps.readthedocs.io/id/latest/" className="hover:text-blue-300 underline underline-offset-4">Manual</Link>
-              <Link href="https://sumut.bps.go.id/id/term-of-use" className="hover:text-blue-300 underline underline-offset-4">S&K</Link>
-              <Link href="https://sumut.bps.go.id/id/tautan" className="hover:text-blue-300 underline underline-offset-4">Daftar Tautan</Link>
+              <Link href="https://florestimurkab.bps.go.id/id/term-of-use" className="hover:text-blue-300 underline underline-offset-4">S&K</Link>
+              <Link href="https://florestimurkab.bps.go.id/id/tautan" className="hover:text-blue-300 underline underline-offset-4">Daftar Tautan</Link>
             </div>
           </div>
 
