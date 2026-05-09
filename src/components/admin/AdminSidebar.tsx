@@ -64,7 +64,7 @@ export default function AdminSidebar() {
           {/* Logo / Header */}
           <div className="p-6 border-b border-blue-800">
             <h1 className="text-2xl font-bold tracking-tight">Admin INDA</h1>
-            <p className="text-xs text-blue-200 mt-1">BPS Sumatera Utara</p>
+            <p className="text-xs text-blue-200 mt-1">BPS Kabupaten Flores Timur</p>
           </div>
 
           {/* Navigation */}

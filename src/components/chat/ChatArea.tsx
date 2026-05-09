@@ -205,7 +205,7 @@ export default function ChatArea({
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder="Tanya sesuatu tentang data BPS Provinsi Sumatera Utara"
+              placeholder="Tanya sesuatu tentang data BPS Kabupaten Flores Timur"
               className="flex-1 max-h-[200px] min-h-[44px] py-2.5 px-2 bg-transparent border-none focus:ring-0 resize-none text-gray-800 placeholder:text-gray-400 leading-relaxed scrollbar-thin scrollbar-thumb-gray-300"
               rows={1}
             />

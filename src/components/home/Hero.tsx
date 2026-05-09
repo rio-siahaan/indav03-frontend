@@ -62,7 +62,7 @@ export default function Hero() {
             >
               Jelajahi Kekuatan <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 animate-gradient-x">
-                Data BPS Sumut
+                Data BPS Kabupaten Flores Timur
               </span>
             </motion.h1>
 
@@ -101,7 +101,7 @@ export default function Hero() {
           {/* <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div> */}
           <div className="grid md:grid-cols-3 gap-8 relative z-10 text-center divide-y md:divide-y-0 md:divide-x divide-blue-800/50">
             <div className="p-4">
-              <div className="text-5xl font-bold mb-2">33+</div>
+              <div className="text-5xl font-bold mb-2">15+</div>
               <div className="text-blue-200 uppercase tracking-wider text-sm">
                 Kabupaten & Kota
               </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect, Suspense, useRef } from "react";
 import ChatSidebar from "@/components/chat/ChatSidebar";
 import ChatArea from "@/components/chat/ChatArea";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -41,6 +41,9 @@ function ChatUI() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:7860";
+  
+  // Gunakan ref untuk mencegah race condition (multiple streams)
+  const isStreamingRef = useRef(false);
 
   // Fetch conversations on mount
   useEffect(() => {
@@ -130,7 +133,11 @@ function ChatUI() {
   };
 
   const handleSendMessage = async (content: string) => {
-    if (isLoading) return;
+    // Pastikan tidak ada duplikasi request dengan mengecek ref dan state
+    if (isLoading || isStreamingRef.current) return;
+    
+    isStreamingRef.current = true;
+    setIsLoading(true);
 
     const tempId = Date.now().toString();
     const userMessage: Message = {
@@ -140,7 +147,6 @@ function ChatUI() {
       created_at: new Date().toISOString(),
     };
     setMessages((prev) => [...prev, userMessage]);
-    setIsLoading(true);
 
     try {
       let conversationId = currentConversationId;
@@ -203,13 +209,16 @@ function ChatUI() {
       const decoder = new TextDecoder();
       let aiContent = "";
       let finalUsage = { prompt_tokens: 0, completion_tokens: 0 };
+      let buffer = "";
 
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
 
-        const chunk = decoder.decode(value);
-        const lines = chunk.split("\n\n");
+        const chunk = decoder.decode(value, { stream: true });
+        buffer += chunk;
+        const lines = buffer.split("\n\n");
+        buffer = lines.pop() || "";
 
         for (const line of lines) {
           if (line.startsWith("data: ")) {
@@ -269,6 +278,7 @@ function ChatUI() {
                 );
               } else if (data.type === "error") {
                 const errorContent = data.content;
+                aiContent = errorContent; // Use the error content for DB
                 setMessages((prev) =>
                   prev.map((m) =>
                     m.id === aiMsgId ? { ...m, content: errorContent } : m
@@ -285,7 +295,7 @@ function ChatUI() {
       // Clear tool status
       setToolStatus(null);
 
-      // 4. Save Final AI Message to DB
+      // 4. Save Final AI Message to DB (tanpa mengubah UI lagi untuk menghindari duplikasi final response)
       await fetch("/api/messages", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -299,17 +309,22 @@ function ChatUI() {
       });
     } catch (error) {
       console.error("Error in chat flow:", error);
-      setMessages((prev) => [
-        ...prev,
-        {
-          id: Date.now().toString(),
-          role: "assistant",
-          content: "Maaf, terjadi kesalahan jaringan. Silakan coba lagi.",
-        },
-      ]);
+      if (error instanceof Error && error.name === "AbortError") {
+        console.log("Stream aborted.");
+      } else {
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: Date.now().toString(),
+            role: "assistant",
+            content: "Maaf, terjadi kesalahan jaringan. Silakan coba lagi.",
+          },
+        ]);
+      }
     } finally {
       setIsLoading(false);
       setToolStatus(null);
+      isStreamingRef.current = false; // Reset stream status
     }
   };
 
