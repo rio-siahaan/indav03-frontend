@@ -7,7 +7,7 @@ const features = [
   {
     icon: <Database className="h-6 w-6" />,
     title: "Data Komprehensif",
-    description: "Akses jutaan titik data dari BPS Sumatera Utara langsung melalui pertanyaan bahasa alami.",
+    description: "Akses jutaan titik data dari BPS Kabupaten Flores Timur langsung melalui pertanyaan bahasa alami.",
     color: "bg-blue-100 text-blue-600",
   },
   {
