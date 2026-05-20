@@ -107,7 +107,7 @@ export default function ChatArea({
                 <div
                   key={m.id}
                   className={cn(
-                    "flex w-full max-w-4xl mx-auto gap-4",
+                    "flex w-full max-w-4xl mx-auto gap-3 group",
                     m.role === "user" ? "justify-end" : "justify-start"
                   )}
                 >
@@ -115,6 +115,20 @@ export default function ChatArea({
                     <div className="w-8 h-8 rounded-full bg-[#002B6A] flex items-center justify-center text-white shrink-0 mt-1 shadow-sm">
                       <Bot className="w-5 h-5" />
                     </div>
+                  )}
+
+                  {m.role === "user" && (
+                    <button
+                      onClick={() => handleCopy(m.id, m.content)}
+                      className="p-1.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-opacity self-end mb-1 opacity-100 md:opacity-0 md:group-hover:opacity-100"
+                      title="Salin pesan"
+                    >
+                      {copiedId === m.id ? (
+                        <Check className="w-4 h-4 text-green-500" />
+                      ) : (
+                        <Copy className="w-4 h-4" />
+                      )}
+                    </button>
                   )}
 
                   <div
@@ -147,46 +161,31 @@ export default function ChatArea({
                         {m.content}
                       </ReactMarkdown>
                     </div>
-                    
-                    {/* Action Bar */}
-                    <div className={cn(
-                      "flex items-center mt-2 pt-2 gap-2",
-                      m.role === "user" ? "border-t border-white/20 justify-end" : "border-t border-gray-200 justify-start"
-                    )}>
-                      <button
-                        onClick={() => handleCopy(m.id, m.content)}
-                        className={cn(
-                          "flex items-center gap-1.5 p-1 rounded-md text-xs font-medium transition-colors",
-                          m.role === "user" 
-                            ? "text-blue-100 hover:text-white hover:bg-blue-800" 
-                            : "text-gray-500 hover:text-gray-700 hover:bg-gray-200"
-                        )}
-                        title="Salin pesan"
-                      >
-                        {copiedId === m.id ? (
-                          <>
-                            <Check className="w-3.5 h-3.5 text-green-400" />
-                            <span>Tersalin</span>
-                          </>
-                        ) : (
-                          <>
-                            <Copy className="w-3.5 h-3.5" />
-                            <span>Salin</span>
-                          </>
-                        )}
-                      </button>
 
-                      {m.role === "assistant" && m.usage && (
-                        <div className="text-[10px] text-gray-400 flex gap-3 font-mono ml-auto">
-                          <span>In: {m.usage.prompt_tokens}</span>
-                          <span>Out: {m.usage.completion_tokens}</span>
-                          <span className="font-medium text-gray-500">
-                            Total: {m.usage.total_tokens}
-                          </span>
-                        </div>
-                      )}
-                    </div>
+                    {m.role === "assistant" && m.usage && (
+                      <div className="mt-2 pt-2 border-t border-gray-200 text-[10px] text-gray-400 flex gap-3 font-mono">
+                        <span>In: {m.usage.prompt_tokens}</span>
+                        <span>Out: {m.usage.completion_tokens}</span>
+                        <span className="font-medium text-gray-500">
+                          Total: {m.usage.total_tokens}
+                        </span>
+                      </div>
+                    )}
                   </div>
+
+                  {m.role === "assistant" && (
+                    <button
+                      onClick={() => handleCopy(m.id, m.content)}
+                      className="p-1.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-opacity self-end mb-1 opacity-100 md:opacity-0 md:group-hover:opacity-100"
+                      title="Salin pesan"
+                    >
+                      {copiedId === m.id ? (
+                        <Check className="w-4 h-4 text-green-500" />
+                      ) : (
+                        <Copy className="w-4 h-4" />
+                      )}
+                    </button>
+                  )}
 
                   {m.role === "user" && (
                     <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 shrink-0 mt-1 border border-blue-200">
