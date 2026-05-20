@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Send, User, Bot, StopCircle } from "lucide-react";
+import { Send, User, Bot, StopCircle, Copy, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 import EmptyState from "./EmptyState";
 import { useSession } from "next-auth/react";
@@ -44,6 +44,13 @@ export default function ChatArea({
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const { data: session } = useSession();
+  const [copiedId, setCopiedId] = useState<string | null>(null);
+
+  const handleCopy = (id: string, content: string) => {
+    navigator.clipboard.writeText(content);
+    setCopiedId(id);
+    setTimeout(() => setCopiedId(null), 2000);
+  };
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -140,15 +147,45 @@ export default function ChatArea({
                         {m.content}
                       </ReactMarkdown>
                     </div>
-                    {m.role === "assistant" && m.usage && (
-                      <div className="mt-2 pt-2 border-t border-gray-200 text-[10px] text-gray-400 flex gap-3 font-mono">
-                        <span>In: {m.usage.prompt_tokens}</span>
-                        <span>Out: {m.usage.completion_tokens}</span>
-                        <span className="font-medium text-gray-500">
-                          Total: {m.usage.total_tokens}
-                        </span>
-                      </div>
-                    )}
+                    
+                    {/* Action Bar */}
+                    <div className={cn(
+                      "flex items-center mt-2 pt-2 gap-2",
+                      m.role === "user" ? "border-t border-white/20 justify-end" : "border-t border-gray-200 justify-start"
+                    )}>
+                      <button
+                        onClick={() => handleCopy(m.id, m.content)}
+                        className={cn(
+                          "flex items-center gap-1.5 p-1 rounded-md text-xs font-medium transition-colors",
+                          m.role === "user" 
+                            ? "text-blue-100 hover:text-white hover:bg-blue-800" 
+                            : "text-gray-500 hover:text-gray-700 hover:bg-gray-200"
+                        )}
+                        title="Salin pesan"
+                      >
+                        {copiedId === m.id ? (
+                          <>
+                            <Check className="w-3.5 h-3.5 text-green-400" />
+                            <span>Tersalin</span>
+                          </>
+                        ) : (
+                          <>
+                            <Copy className="w-3.5 h-3.5" />
+                            <span>Salin</span>
+                          </>
+                        )}
+                      </button>
+
+                      {m.role === "assistant" && m.usage && (
+                        <div className="text-[10px] text-gray-400 flex gap-3 font-mono ml-auto">
+                          <span>In: {m.usage.prompt_tokens}</span>
+                          <span>Out: {m.usage.completion_tokens}</span>
+                          <span className="font-medium text-gray-500">
+                            Total: {m.usage.total_tokens}
+                          </span>
+                        </div>
+                      )}
+                    </div>
                   </div>
 
                   {m.role === "user" && (
