@@ -73,7 +73,7 @@ function LoginUI() {
               />
             </div>
             <h1 className="text-3xl font-bold text-[#002B6A] mb-2">Selamat Datang Kembali</h1>
-            <p className="text-gray-600 text-sm">Masuk untuk mengakses Data BPS Sumut</p>
+            <p className="text-gray-600 text-sm">Masuk untuk mengakses Data BPS Kabupaten Flores Timur</p>
           </div>
 
           {/* Error Message */}
